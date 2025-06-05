@@ -1,6 +1,10 @@
 import { Bot } from 'grammy'
 import 'dotenv/config'
 
+if (!process.env.BOT_TOKEN || !process.env.CHANNEL_ID) {
+  throw new Error('BOT_TOKEN and CHANNEL_ID must be set')
+}
+
 const CHANNEL_ID = Number(process.env.CHANNEL_ID)
 
 const bot = new Bot(process.env.BOT_TOKEN!)
