@@ -13,16 +13,20 @@ bot.command('start', (ctx) => ctx.reply('Привет! Я david - бот 🤖'))
 
 const regex = /раз[ьъ]?[её]б\w*/iu
 
-bot.on('message:text', (ctx, next) => {
+bot.on('message:text', async (ctx, next) => {
   if (ctx.message.sender_chat?.id === CHANNEL_ID) {
     return next()
   }
 
   const message = ctx.message.text.toLowerCase()
-  if (regex.test(message)) {
-    ctx.react('🔥')
-  } else {
-    ctx.react('💩')
+  try {
+    if (regex.test(message)) {
+      await ctx.react('🔥')
+    } else {
+      await ctx.react('💩')
+    }
+  } catch (err) {
+    console.error('Ошибка при попытке поставить реакцию:', err)
   }
   next()
 })
